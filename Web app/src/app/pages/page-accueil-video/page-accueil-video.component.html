@@ -1,0 +1,18 @@
+<div class="width-100pc height-100pc">
+
+  <div class="width-100pc height-100pc conteneur padding-5 gap-5">
+
+    <div *ngFor="let camera of TABVideo; let i=index; let isFirst=first; let isLast=last"
+         class="enfant display-flex align-items-center">
+
+      <app-camera-mobile (changeRoute)="setTabVideo()" [data]="camera"
+                         [widthVideo]="userNavigationService.getThinMenu() ? '90%' : '100%'"
+                         [heightVideo]="'auto'" [id]="i+1" [displayArrowLeft]="!isFirst"
+                         [displayArrowRight]="!isLast" class="width-100pc height-100pc">
+      </app-camera-mobile>
+
+    </div>
+
+  </div>
+
+</div>

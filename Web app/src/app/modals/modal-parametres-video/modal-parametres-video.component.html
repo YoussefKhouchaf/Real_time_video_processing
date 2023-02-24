@@ -1,0 +1,22 @@
+<div class="width-100pc height-100pc display-flex flex-flow-column align-items-center justify-content-center">
+
+  <div *ngIf="displayParams" class="width-100pc display-flex">
+    <a [href]="dnsVideo" target="_blank">Voir tous les paramètres</a>
+  </div>
+
+  <mat-form-field class="example-full-width" appearance="fill" style="width:49%;">
+    <mat-label>Adresse IP</mat-label>
+    <input type="text" matInput [(ngModel)]="dnsVideo"
+           placeholder="http://127.0.0.1:8080">
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill" style="width:49%;">
+    <mat-label>Uri</mat-label>
+    <input  type="text" matInput [(ngModel)]="uriVideo"
+            placeholder="/video">
+  </mat-form-field>
+
+  <button (click)="validation()" mat-raised-button>Valider</button>
+
+</div>

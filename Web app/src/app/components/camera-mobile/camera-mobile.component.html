@@ -1,0 +1,58 @@
+<div (mouseenter)="showToggle = true" (mouseleave)="showToggle = false" class="width-100pc height-100pc">
+
+  <div *ngIf="displayVideo && !isLoadingVideo  && !isLoadingPicture" class="width-100pc height-100pc conteneur gap-15">
+
+    <div *ngIf="functionSelected == 0  && userNavigationService.getModifierPage()" class="width-100pc enfant-1 display-flex justify-content-center gap-15 padding-10">
+      <i *ngIf="displayArrowLeft" (click)="changeId()" [matTooltip]="'Déplacer'" class="fa fa-long-arrow-alt-left font-size-16 cursor-pointer" ></i>
+      <i (click)="resetVideo()" [matTooltip]="'Supprimer'" class="fa fa-trash color-tomato font-size-16 cursor-pointer"></i>
+      <i *ngIf="displayArrowRight" (click)="changeId(true)" [matTooltip]="'Déplacer'" class="fa fa-long-arrow-alt-right font-size-16 cursor-pointer" ></i>
+    </div>
+
+    <div *ngIf="functionSelected == 0 && data.dns && userNavigationService.getIsAdmin()" class="width-100pc enfant-2 display-flex justify-content-center gap-5" [style.border-top-width]="widthVideo">
+      <div class="width-100pc height-100pc display-flex justify-content-center align-items-center gap-15">
+        <mat-slide-toggle *ngIf="showToggle" [matTooltip]="'Traitement'" [(ngModel)]="traitementVideo" (change)="setUrlVideo()" class="toggle padding-10 cursor-pointer color-white text-decoration-none"></mat-slide-toggle>
+        <i *ngIf="!record" (click)="launchRecording()" [matTooltip]="'Démarer l\'enregistrement'"  class="fa fa-video-camera padding-10 cursor-pointer color-white text-decoration-none"></i>
+        <i *ngIf="record" (click)="launchRecording()" [matTooltip]="'Arrêter'"  class="fa fa-video-camera color-tomato padding-10 cursor-pointer color-white text-decoration-none"></i>
+        <i (click)="this.functionSelected = 3" [matTooltip]="'Capture d\'écran'"  class="fa fa-camera padding-10 cursor-pointer color-white text-decoration-none"></i>
+        <a  (click)="openModalParametresVideo()" [matTooltip]="'Paramètres généraux'"  class="fa fa-gear padding-10 cursor-pointer color-white text-decoration-none"></a>
+        <i (click)="openModalVideFullScreen()" [matTooltip]="'Plein écran'"  class="fa fa-expand padding-10 cursor-pointer"></i>
+      </div>
+    </div>
+
+    <div *ngIf="functionSelected == 0 && data.dns && !userNavigationService.getIsAdmin()" class="width-100pc enfant-2 display-flex justify-content-center gap-5" [style.border-top-width]="widthVideo">
+      <div class="width-80pc height-100pc display-flex justify-content-flex-end align-items-center gap-15">
+         <i (click)="openModalVideFullScreen()" [matTooltip]="'Plein écran'"  class="fa fa-expand padding-10 cursor-pointer"></i>
+      </div>
+    </div>
+
+    <div *ngIf="functionSelected == 3  && data.dns" class="enfant-2 position-absolute display-flex justify-content-space-between gap-5">
+      <a  [href]="this.data.dns" target="_blank" [matTooltip]="'Paramètre général'"  class="fa fa-gear padding-10 cursor-pointer color-white text-decoration-none"></a>
+      <i [matTooltip]="'Afficher vidéo'" (click)="functionSelected = 0" class="fa fa-refresh padding-10 cursor-pointer color-white text-decoration-none"></i>
+<!--      <i (click)="donwloadPicture()" [matTooltip]="'Enregistrer la photo'" class="fa fa-download padding-10 cursor-pointer"></i>-->
+    </div>
+
+    <img *ngIf="functionSelected == 0 && data.dns" src="{{urlFlaskVideo}}" id="videocam" class="enfant-3 border-radius-10px" [style.width]="widthVideo" [style.height]="heightVideo">
+
+    <img *ngIf="functionSelected == 3 && !isLoadingPicture && data.dns" src="{{data.dns}}/photo.jpg" class="enfant-3 width-100pc max-height-85pc photocam">
+
+  </div>
+
+  <div *ngIf="isLoadingVideo || isLoadingPicture" class="width-100pc height-100pc display-flex flex-flow-column justify-content-center align-items-center gap-15">
+    <mat-spinner class="color-spinner"  [diameter]="60" ></mat-spinner >
+    <span *ngIf="isLoadingVideo" >Chargement du flux vidéo</span>
+    <span *ngIf="isLoadingPicture" >Capture de la photo</span>
+    <button mat-raised-button *ngIf="!isLoadingPicture" (click)="openModalParametresVideoComponent()" [color]="'accent'">Modifier le flux</button>
+  </div>
+
+  <div *ngIf="!displayVideo" class="width-100pc height-100pc">
+
+    <div *ngIf="!data.dns" class="width-100pc height-100pc display-flex flex-flow-column justify-content-center align-items-center">
+
+      <span>Aucun flux vidéo</span>
+      <button *ngIf="userNavigationService.getIsAdmin()" mat-raised-button (click)="openModalParametresVideoComponent()" [color]="'accent'">Ajouter</button>
+    </div>
+
+
+  </div>
+</div>
+

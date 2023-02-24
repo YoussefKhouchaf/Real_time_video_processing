@@ -1,0 +1,35 @@
+<div class="width-100pc height-100pc display-flex justify-content-space-between gap-10px padding-10 padding-bottom-0 position-relative">
+
+  <div (click)="userNavigationService.setThinMenu(!userNavigationService.getThinMenu())" class="width-25px height-25px display-flex justify-content-center align-items-center background-color-white position-absolute top-0 left-0 border-radius-50px cursor-pointer" style="box-shadow: #0000002e 0 0 5px;box-sizing: border-box;color: #777;">
+    <i class="fa fa-arrows-alt-h"></i>
+  </div>
+
+  <div class="height-100pc display-flex flex-flow-column gap-5 padding-bottom-10px">
+    <div [ngClass]="userNavigationService.getThinMenu() ? 'min-width-50px width-50px' : 'min-width-200px width-200px'" class="padding-5 border-radius-5px font-size-12 flex-1-1-auto" style="box-shadow: #0000002e 0 0 5px;box-sizing: border-box; background-color: #4c4c4c;">
+
+      <div class="width-100pc height-100pc display-flex flex-flow-column gap-5" [class]="!userNavigationService.getThinMenu() ? 'child' : ''">
+
+        <ng-container *ngFor="let app of TABMenu; let i = index;">
+
+          <div *ngIf="app.type == 'route' && (!app.admin || (app.admin && userNavigationService.getIsAdmin()))" (click)="changeRoute(app.route)" [ngClass]="{'activepanelmobile':app.active && userNavigationService.getThinMenu(),'activepanel':app.active && !userNavigationService.getThinMenu()}" class=" height-50px text-decoration-none cursor-pointer">
+
+            <div *ngIf="app.route" [ngClass]="userNavigationService.getThinMenu() ? 'justify-content-center' : 'padding-left-5'" [style.border-bottom]="userNavigationService.getThinMenu() && activeUrl == app.route ? '2px solid #e7e7e7' : 'none'"  [matTooltip]="userNavigationService.getThinMenu() ? app.nomDisplay : null" [matTooltipPosition]="'right'" class="height-100pc display-flex gap-10 align-items-center text-decoration-none">
+              <img *ngIf="app.img" [src]="app.img" class="width-25px"/>
+              <i *ngIf="!app.img" [ngClass]="'fa fa-circle'" class="font-size-8"></i>
+              <span *ngIf="!userNavigationService.getThinMenu()" [class]="activeUrl == app.route ? 'font-weight-bold' : ''" class="text-decoration-none border">{{app.nomDisplay}}</span>
+            </div>
+
+          </div>
+
+          <div *ngIf="app.type == 'toggle' && (!app.admin || (app.admin && userNavigationService.getIsAdmin()))" (click)="userNavigationService.setModifierPage(!userNavigationService.getModifierPage())">
+            <mat-slide-toggle
+              [checked]="userNavigationService.getModifierPage()">
+              <span *ngIf="!userNavigationService.getThinMenu()">{{app.nomDisplay}}</span>
+            </mat-slide-toggle>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+</div>

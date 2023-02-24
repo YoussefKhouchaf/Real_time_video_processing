@@ -1,0 +1,36 @@
+.conteneur{
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(1, 1fr); /* 3 colonnes, chaque colonne est de 1 fraction de la largeur totale */
+  grid-template-rows: auto; /* une seule ligne, qui s'ajustera à la hauteur des éléments enfants */
+}
+
+.conteneur:hover > .enfant-2{
+  display: flex;
+  height: 100%;
+  font-size: 12pt;
+  //border-top: 1px solid #e7e7e7;
+  transition: height 500ms;
+}
+
+.enfant-1{
+  grid-row: 1; /* place l'élément enfant dans la première ligne de la grille */
+  grid-column: 1; /* place l'élément enfant sur les colonnes 1 à 3 de la grille */
+  z-index: 1;
+}
+
+.enfant-2{
+  font-size: 0;
+  height: 0;
+  grid-row: 8; /* place l'élément enfant dans la première ligne de la grille */
+  grid-column: 1; /* place l'élément enfant sur les colonnes 1 à 3 de la grille */
+  z-index: 1;
+  transition: height 500ms;
+}
+
+.enfant-3{
+  grid-row: 1 / 10; /* place l'élément enfant dans la deuxième ligne de la grille */
+  grid-column: 1; /* place l'élément enfant sur les colonnes 1 à 3 de la grille */
+  z-index: 0;
+}
+
